@@ -77,5 +77,14 @@ namespace UserMaintenance {
                 return ResourceManager.GetString("String1", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to fÁJLBAÍRÁS.
+        /// </summary>
+        internal static string WriteToFiLE {
+            get {
+                return ResourceManager.GetString("WriteToFiLE", resourceCulture);
+            }
+        }
     }
 }

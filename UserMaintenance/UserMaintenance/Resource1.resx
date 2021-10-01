@@ -123,4 +123,7 @@
   <data name="String1" xml:space="preserve">
     <value>hozzáadásgomb</value>
   </data>
+  <data name="WriteToFiLE" xml:space="preserve">
+    <value>fÁJLBAÍRÁS</value>
+  </data>
 </root>
