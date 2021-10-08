@@ -4,18 +4,21 @@ using System.Windows.Forms;
 using Excel = Microsoft.Office.Interop.Excel;
 using System.Reflection;
 using System;
+using System.Drawing;
 
 namespace ExcelGeneralas
 
 {
     public partial class Form1 : Form
     {
+        public int _millio = (int)Math.Pow(10, 6);
 
         RealEstateEntities context = new RealEstateEntities();
         List<Flat> lakasok;
         Excel.Application xlApp;
         Excel.Workbook xlWB;
         Excel.Worksheet xlSheet;
+        string[] headers ;
 
         public Form1()
         {
@@ -23,6 +26,7 @@ namespace ExcelGeneralas
             LoadData();
             dataGridView1.DataSource = lakasok;
             CreateExcel();
+            FormatTable();
 
 
         }
@@ -56,7 +60,7 @@ namespace ExcelGeneralas
         }
         private void CreateTable()
         {
-            string[] headers = new string[]
+            headers =  new string[]
             {
             "Kód",
             "Eladó",
@@ -78,6 +82,7 @@ namespace ExcelGeneralas
             object[,] values = new object[lakasok.Count, headers.Length];
 
             int counter = 0;
+            int floorColumn = 6;
             foreach (var lakas in lakasok)
             {
                 values[counter, 0] = lakas.Code;
@@ -94,7 +99,12 @@ namespace ExcelGeneralas
                 values[counter, 5] = lakas.NumberOfRooms;
                 values[counter, 6] = lakas.FloorArea;
                 values[counter, 7] = lakas.Price;
-                values[counter, 8] = "";
+                values[counter, 8] = ("={0}/{1}*{2}",
+                    "H" + (counter + 2).ToString(),
+                    GetCell(counter +2 , floorColumn+1),
+                    _millio.ToString()); 
+
+
                 counter++;
             }
 
@@ -119,5 +129,19 @@ namespace ExcelGeneralas
 
             return ExcelCoordinate;
         }
+        private void FormatTable()
+        {
+            Excel.Range headerRange = xlSheet.get_Range(GetCell(1, 1), GetCell(1, headers.Length));
+            headerRange.Font.Bold = true;
+            headerRange.VerticalAlignment = Excel.XlVAlign.xlVAlignCenter;
+            headerRange.HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter;
+            headerRange.EntireColumn.AutoFit();
+            headerRange.RowHeight = 40;
+            headerRange.Interior.Color = Color.LightBlue;
+            headerRange.BorderAround2(Excel.XlLineStyle.xlContinuous, Excel.XlBorderWeight.xlThick);
+         //   Excel.Range complateTable = xlSheet.get_Range(GetCell(1, 1), GetCell(lastRowID, headers.Length));
+
+        }
+
     }
 }
