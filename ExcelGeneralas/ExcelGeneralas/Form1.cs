@@ -10,7 +10,7 @@ namespace ExcelGeneralas
 {
     public partial class Form1 : Form
     {
-        
+
         RealEstateEntities context = new RealEstateEntities();
         List<Flat> lakasok;
         Excel.Application xlApp;
@@ -24,11 +24,11 @@ namespace ExcelGeneralas
             dataGridView1.DataSource = lakasok;
             CreateExcel();
 
-            
+
         }
         public void LoadData()
         {
-            
+
             lakasok = context.Flats.ToList();
         }
 
@@ -52,11 +52,29 @@ namespace ExcelGeneralas
                 xlApp.Quit();
                 xlApp = null;
             }
-            
+
         }
         private void CreateTable()
-        { 
-        
+        {
+            string[] headers = new string[]
+            {
+            "Kód",
+            "Eladó",
+               "Oldal",
+            "Kerület",
+            "Lift",
+         "Szobák száma",
+         "Alapterület (m2)",
+         "Ár (mFt)",
+            "Négyzetméter ár (Ft/m2)"
+
+            };
+            for (int i = 0; i < headers.Length; i++)
+            {
+                xlSheet.Cells[1, i+1] = headers[i];
+            }
+
+            
         }
     }
 }
