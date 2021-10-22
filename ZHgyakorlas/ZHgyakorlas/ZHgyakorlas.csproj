@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Folder\Country.cs" />
+    <Compile Include="Folder\Ramen.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
