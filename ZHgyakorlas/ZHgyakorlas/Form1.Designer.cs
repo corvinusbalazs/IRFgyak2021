@@ -53,7 +53,7 @@ namespace ZHgyakorlas
             this.listBox1.ItemHeight = 16;
             this.listBox1.Location = new System.Drawing.Point(495, 37);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(234, 132);
+            this.listBox1.Size = new System.Drawing.Size(234, 260);
             this.listBox1.TabIndex = 1;
             // 
             // Form1

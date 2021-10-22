@@ -21,6 +21,7 @@ namespace ZHgyakorlas
 
             LoadData("ramen-ratings.csv");
             dataGridView1.DataSource = ramens.ToList();
+            Filtering();
         }
 
         public void LoadData(string csv)
