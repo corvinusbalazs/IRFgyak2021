@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace ReV2._0
+namespace ReV2
 {
     static class Program
     {

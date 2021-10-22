@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ReV2._0
+namespace ReV2
 {
     using System;
     using System.Collections.Generic;
