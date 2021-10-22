@@ -11,7 +11,7 @@ namespace ZHgyakorlas.Folder
         public string Name { get; set; }
         public string Style { get; set; }
         public string Country { get; set; }
-        public decimal Rating { get; set; }
+        public double Rating { get; set; }
 
 
     }
