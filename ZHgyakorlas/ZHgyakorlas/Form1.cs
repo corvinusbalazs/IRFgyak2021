@@ -60,5 +60,29 @@ namespace ZHgyakorlas
             listBox1.DisplayMember = "Style";
 
         }
+
+        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string valasztott = listBox1.SelectedItem.ToString();
+            Gyujt(valasztott);
+        }
+        public void Gyujt(string be)
+        {
+
+            var s = from x in ramens
+                    where x.Style == be
+                    select x;
+
+
+            var orszag = ((from x in ramens
+                    where x.Style == be
+                    select x.Country).Distinct()).ToList();
+
+            var orszagok = (from o in s
+                            orderby o.Country
+                            select o.Country).Distinct().ToList();
+
+            dataGridView2.DataSource = orszag.ToList();
+        }
     }
 }
