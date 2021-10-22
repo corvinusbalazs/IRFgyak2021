@@ -67,6 +67,36 @@ namespace VaR
             //                    Volume = y.Volume
             //                };
             //dataGridView1.DataSource = kapcsolt.ToList();
+
+
+
+            List<decimal> Nyereségek = new List<decimal>();
+
+            int intervalum = 30;
+            DateTime kezdőDátum = (from x in Ticks select x.TradingDay).Min();
+            DateTime záróDátum = new DateTime(2016, 12, 30);
+
+
+            TimeSpan z = záróDátum - kezdőDátum;
+
+
+            for (int i = 0; i < z.Days - intervalum; i++)
+            {
+                DateTime ablakZaro = kezdőDátum.AddDays(i + intervalum);//30 nappal későbbinek kell lennie
+                DateTime ablakNyito = kezdőDátum.AddDays(i);
+
+
+                decimal ny = GetPortfolioValue(ablakZaro)
+                           - GetPortfolioValue(ablakNyito);
+                Nyereségek.Add(ny);
+                Console.WriteLine(i + " " + ny);
+            }
+
+            var nyereségekRendezve = (from x in Nyereségek
+                                      orderby x
+                                      select x)
+                                        .ToList();
+            MessageBox.Show(nyereségekRendezve[nyereségekRendezve.Count() / 5].ToString());
         }
 
         private void CreatePortfolio()
