@@ -15,6 +15,13 @@ namespace probaweek
         public Form1()
         {
             InitializeComponent();
+            int s = 10;
+            string balazs = "balazs";
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
