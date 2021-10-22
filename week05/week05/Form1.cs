@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -125,5 +126,27 @@ namespace week05
             return value;
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            var sfd = new SaveFileDialog();
+            sfd.InitialDirectory = Application.StartupPath;
+
+            if (sfd.ShowDialog() != DialogResult.OK) return;
+
+
+
+
+
+            using (var sw = new StreamWriter(sfd.FileName, false, Encoding.UTF8))
+            {
+                sw.WriteLine("nyereség;rendezve");
+                for (int i = 0; i < nyereségekRendezve.Count(); i++)
+                {
+
+
+                    sw.WriteLine(string.Format("{0};{1}", i, nyereségekRendezve[i]));
+                }
+            }
+        }
     }
 }
