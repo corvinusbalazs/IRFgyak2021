@@ -29,9 +29,9 @@ namespace MNB_SOAP
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend6 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.chartRateData = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.dateTimePickerTol = new System.Windows.Forms.DateTimePicker();
@@ -59,16 +59,16 @@ namespace MNB_SOAP
             this.chartRateData.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            chartArea2.Name = "ChartArea1";
-            this.chartRateData.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            this.chartRateData.Legends.Add(legend2);
+            chartArea6.Name = "ChartArea1";
+            this.chartRateData.ChartAreas.Add(chartArea6);
+            legend6.Name = "Legend1";
+            this.chartRateData.Legends.Add(legend6);
             this.chartRateData.Location = new System.Drawing.Point(563, 98);
             this.chartRateData.Name = "chartRateData";
-            series2.ChartArea = "ChartArea1";
-            series2.Legend = "Legend1";
-            series2.Name = "Series1";
-            this.chartRateData.Series.Add(series2);
+            series6.ChartArea = "ChartArea1";
+            series6.Legend = "Legend1";
+            series6.Name = "Series1";
+            this.chartRateData.Series.Add(series6);
             this.chartRateData.Size = new System.Drawing.Size(494, 540);
             this.chartRateData.TabIndex = 1;
             this.chartRateData.Text = "chart1";
@@ -81,6 +81,8 @@ namespace MNB_SOAP
             this.dateTimePickerTol.Name = "dateTimePickerTol";
             this.dateTimePickerTol.Size = new System.Drawing.Size(250, 22);
             this.dateTimePickerTol.TabIndex = 2;
+            this.dateTimePickerTol.Value = new System.DateTime(2020, 1, 1, 0, 0, 0, 0);
+            this.dateTimePickerTol.ValueChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // dateTimePickerIG
             // 
@@ -90,6 +92,8 @@ namespace MNB_SOAP
             this.dateTimePickerIG.Name = "dateTimePickerIG";
             this.dateTimePickerIG.Size = new System.Drawing.Size(250, 22);
             this.dateTimePickerIG.TabIndex = 3;
+            this.dateTimePickerIG.Value = new System.DateTime(2021, 6, 30, 0, 0, 0, 0);
+            this.dateTimePickerIG.VisibleChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // comboBox1
             // 
@@ -101,6 +105,8 @@ namespace MNB_SOAP
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(129, 24);
             this.comboBox1.TabIndex = 4;
+            this.comboBox1.Text = "EUR";
+            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // mehet
             // 
@@ -110,6 +116,7 @@ namespace MNB_SOAP
             this.mehet.TabIndex = 5;
             this.mehet.Text = "button1";
             this.mehet.UseVisualStyleBackColor = true;
+            this.mehet.Click += new System.EventHandler(this.mehet_Click);
             // 
             // Form1
             // 

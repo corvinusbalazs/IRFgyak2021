@@ -21,9 +21,15 @@ namespace MNB_SOAP
         public Form1()
         {
             InitializeComponent();
-          string result =  WebserviceCall();
+            RefreshData();
+        }
+
+        private void RefreshData()
+        {
+            Rates.Clear();
+            string result = WebserviceCall();
             ProcessXML(result);
-            
+
             dataGridView1.DataSource = Rates;
             Charting();
         }
@@ -53,9 +59,9 @@ namespace MNB_SOAP
             MNBArfolyamServiceSoapClient mnbService = new MNBArfolyamServiceSoapClient();
             GetExchangeRatesRequestBody request = new GetExchangeRatesRequestBody();
 
-            request.currencyNames = "EUR";
-            request.startDate = "2020-01-01";
-            request.endDate = "2020-06-30";
+            request.currencyNames = comboBox1.SelectedItem.ToString(); // "EUR";
+            request.startDate = dateTimePickerTol.Value.ToString("yyyy-MM-dd"); //"2020-01-01";
+            request.endDate = dateTimePickerIG.Value.ToString("yyyy-MM-dd");
 
 
 
@@ -67,8 +73,8 @@ namespace MNB_SOAP
             //    startDate = "2020-01-01",
             //    endDate = "2020-06-30"
             //};
-            
-            
+
+
             var response = mnbService.GetExchangeRates(request);
 
             string result = response.GetExchangeRatesResult;
@@ -105,6 +111,16 @@ namespace MNB_SOAP
                 }
                 Rates.Add(r);
             }
+        }
+
+        private void mehet_Click(object sender, EventArgs e)
+        {
+            RefreshData();
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Refresh();
         }
     }
 }
