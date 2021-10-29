@@ -33,10 +33,18 @@ namespace MNB_SOAP
             chartRateData.DataSource = Rates;
             var series = chartRateData.Series[0];
             series.ChartType = SeriesChartType.Line;
+
             series.XValueMember = "Date";
             series.YValueMembers = "Value";
             series.BorderWidth = 2;
+           
+            var chartArea = chartRateData.ChartAreas[0];
+            chartArea.AxisX.MajorGrid.Enabled = false;
+            chartArea.AxisY.MajorGrid.Enabled = false;
+            chartArea.AxisY.IsStartedFromZero = false;
 
+            var legend = chartRateData.Legends[0];
+            legend.Enabled = false;
 
         }
 
@@ -88,12 +96,12 @@ namespace MNB_SOAP
                 r.Curreny = child.GetAttribute("curr");
                 r.Value = decimal.Parse(child.InnerText);
 
-
+                var childElement = (XmlElement)element.ChildNodes[0];
                 int unit = int.Parse(child.GetAttribute("unit"));
-
+                var value = decimal.Parse(childElement.InnerText);
                 if (unit!=0)
                 {
-                    r.Value = ValueTuple / unit;
+                    r.Value = value / unit;
                 }
                 Rates.Add(r);
             }
