@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
 using System.Xml;
 
 namespace MNB_SOAP
@@ -24,6 +25,19 @@ namespace MNB_SOAP
             ProcessXML(result);
             
             dataGridView1.DataSource = Rates;
+            Charting();
+        }
+
+        private void Charting()
+        {
+            chartRateData.DataSource = Rates;
+            var series = chartRateData.Series[0];
+            series.ChartType = SeriesChartType.Line;
+            series.XValueMember = "Date";
+            series.YValueMembers = "Value";
+            series.BorderWidth = 2;
+
+
         }
 
         public string WebserviceCall()
@@ -61,12 +75,27 @@ namespace MNB_SOAP
 
         public void ProcessXML(string result)
         {
-            var xml = new XmlDocument();
+            //var xml = new XmlDocument();
+            XmlDocument xml = new XmlDocument();
+
             xml.LoadXml(result);
 
             foreach (XmlElement element in xml.DocumentElement)
             {
+                RateData r = new RateData();
+                r.Date = DateTime.Parse(element.GetAttribute("date"));
+                XmlElement child = (XmlElement)element.FirstChild;
+                r.Curreny = child.GetAttribute("curr");
+                r.Value = decimal.Parse(child.InnerText);
 
+
+                int unit = int.Parse(child.GetAttribute("unit"));
+
+                if (unit!=0)
+                {
+                    r.Value = ValueTuple / unit;
+                }
+                Rates.Add(r);
             }
         }
     }
