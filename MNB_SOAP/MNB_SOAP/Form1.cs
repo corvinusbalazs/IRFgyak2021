@@ -18,14 +18,34 @@ namespace MNB_SOAP
     public partial class Form1 : Form
     {
         BindingList<RateData> Rates = new  BindingList<RateData>();
+        BindingList<string> currencies = new BindingList<string>();
         public Form1()
         {
             InitializeComponent();
+
+
+            comboBox1.DataSource = currencies;
+            MNBArfolyamServiceSoapClient mnbService = new MNBArfolyamServiceSoapClient();
+            GetCurrenciesRequestBody request = new GetCurrenciesRequestBody();
+            var response = mnbService.GetCurrencies(request);
+            string result = response.GetCurrenciesResult;
+            XmlDocument vxml = new XmlDocument();
+            vxml.LoadXml(result);
+            foreach (XmlElement item in vxml.FirstChild.ChildNodes)
+            {
+                currencies.Add(item.InnerText);
+            }
+            File.WriteAllText("valutak", result);
+
+
+
             RefreshData();
         }
 
         private void RefreshData()
         {
+            if (comboBox1.SelectedItem == null) return;
+           
             Rates.Clear();
             string result = WebserviceCall();
             ProcessXML(result);
@@ -56,6 +76,7 @@ namespace MNB_SOAP
 
         public string WebserviceCall()
         {
+            
             MNBArfolyamServiceSoapClient mnbService = new MNBArfolyamServiceSoapClient();
             GetExchangeRatesRequestBody request = new GetExchangeRatesRequestBody();
 
@@ -89,6 +110,7 @@ namespace MNB_SOAP
 
         public void ProcessXML(string result)
         {
+
             //var xml = new XmlDocument();
             XmlDocument xml = new XmlDocument();
 
@@ -99,12 +121,13 @@ namespace MNB_SOAP
                 RateData r = new RateData();
                 r.Date = DateTime.Parse(element.GetAttribute("date"));
                 XmlElement child = (XmlElement)element.FirstChild;
+                if (child == null)                    continue;
                 r.Curreny = child.GetAttribute("curr");
                 r.Value = decimal.Parse(child.InnerText);
 
-                var childElement = (XmlElement)element.ChildNodes[0];
+                //var childElement = (XmlElement)element.ChildNodes[0];
                 int unit = int.Parse(child.GetAttribute("unit"));
-                var value = decimal.Parse(childElement.InnerText);
+                var value = decimal.Parse(child.InnerText);
                 if (unit!=0)
                 {
                     r.Value = value / unit;
