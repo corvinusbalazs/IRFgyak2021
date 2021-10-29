@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml;
 
 namespace MNB_SOAP
 {
@@ -16,10 +17,11 @@ namespace MNB_SOAP
         public Form1()
         {
             InitializeComponent();
-            WebserviceCall();
+          string result =  WebserviceCall();
+            ProcessXML(result);
         }
 
-        public void WebserviceCall()
+        public string WebserviceCall()
         {
             var mnbService = new MNBArfolyamServiceSoapClient();
 
@@ -32,8 +34,18 @@ namespace MNB_SOAP
 
             var response = mnbService.GetExchangeRates(request);
             var result = response.GetExchangeRatesResult;
-            
+            return result;
+        }
 
+        public void ProcessXML(string result)
+        {
+            var xml = new XmlDocument();
+            xml.LoadXml(result);
+
+            foreach (XmlElement element in xml.DocumentElement)
+            {
+
+            }
         }
     }
 }
