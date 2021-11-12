@@ -72,44 +72,57 @@ namespace SantaFactory
         private void SelectCar_Click(object sender, EventArgs e)
         {
             ToyFactory = new CarFactory();
-            toyPanel.Controls.Clear();
-            var valami = ToyFactory.CreateNew();
-            toyPanel.Controls.Add(valami);
+            //toyPanel.Controls.Clear();
+            //var valami = ToyFactory.CreateNew();
+            //toyPanel.Controls.Add(valami);
         }
 
         private void SelectBall_Click(object sender, EventArgs e)
         {
-            ToyFactory = new BallFactory();
-            toyPanel.Controls.Clear();
-            var valami = ToyFactory.CreateNew();
-            toyPanel.Controls.Add(valami);
+            ToyFactory = new BallFactory()
+            {
+                BallColor = btnColor.BackColor
+            };
+            //((BallFactory)ToyFactory).BallColor = btnColor.BackColor;
+            //toyPanel.Controls.Clear();
+            //var valami = ToyFactory.CreateNew();
+            //toyPanel.Controls.Add(valami);
         }
-
         private void DisplayNext()
         {
-
             if (_nextToy != null)
-            {
-                toyPanel.Controls.Remove(_nextToy);
-               
-                //this.Controls.Remove(_nextToy);
-                _nextToy = ToyFactory.CreateNew();
-                toyPanel.Controls.Add(_nextToy);
-                //_nextToy.Top = this.label1.Top;
-                //_nextToy.Left = this.label1.Left + this.label1.Top;
-                //Controls.Add(_nextToy);
-            }
-        
+                Controls.Remove(_nextToy);
+            _nextToy = ToyFactory.CreateNew();
+            _nextToy.Top = label1.Top + label1.Height + 20;
+            _nextToy.Left = label1.Left;
+            Controls.Add(_nextToy);
         }
+        //private void DisplayNext()
+        //{
+
+        //    if (_nextToy != null)
+        //    {
+        //        toyPanel.Controls.Remove(_nextToy);
+               
+        //        //this.Controls.Remove(_nextToy);
+        //        _nextToy = ToyFactory.CreateNew();
+        //        toyPanel.Controls.Add(_nextToy);
+        //        //_nextToy.Top = this.label1.Top;
+        //        //_nextToy.Left = this.label1.Left + this.label1.Top;
+        //        //Controls.Add(_nextToy);
+        //    }
+        
+        //}
 
         private void btnColor_Click(object sender, EventArgs e)
         {
             var button = (Button)sender;
-            var cd = new ColorDialog();
-            if (cd.ShowDialog() != DialogResult.OK)
-            {
+            var colorPicker = new ColorDialog();
+
+            colorPicker.Color = button.BackColor;
+            if (colorPicker.ShowDialog() != DialogResult.OK)
                 return;
-            }
+            button.BackColor = colorPicker.Color;
         }
     }
 }

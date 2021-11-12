@@ -11,13 +11,20 @@ namespace SantaFactory.Entities
 {
     public class Ball : Toy
     {
+
+        public SolidBrush BallColor { get; private set; }
+
+        public Ball(Color color)
+        {
+            BallColor = new SolidBrush(color);   
+        }
       
 
         protected override void DrawImage(Graphics g)
         {
-            var ecset = new SolidBrush(Color.Blue);
+            //var ecset = new SolidBrush(Color.Blue);
 
-            g.FillEllipse(ecset, 0, 0, Width, Height);
+            g.FillEllipse(BallColor, 0, 0, Width, Height);
         }
 
        
