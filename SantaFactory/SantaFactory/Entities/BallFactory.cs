@@ -12,7 +12,7 @@ namespace SantaFactory.Entities
         public Toy CreateNew()
         {
 
-            return new Car();
+            return new Ball();
         }
 
       

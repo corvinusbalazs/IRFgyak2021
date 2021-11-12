@@ -8,6 +8,6 @@ namespace SantaFactory.Abstractions
 {
     public interface IToyFactory
     {
-        public Toy CreateNew();
+         Toy CreateNew();
     }
 }

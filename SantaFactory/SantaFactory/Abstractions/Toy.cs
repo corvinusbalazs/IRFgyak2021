@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace SantaFactory.Abstractions
 {
-    public class Toy : Label
+    public abstract class Toy : Label
     {
         public Toy()
         {
@@ -17,16 +17,12 @@ namespace SantaFactory.Abstractions
             //Height = 50;
             Height = Width;
             Paint += Toy_Paint;
-            var BallColor = Color.Blue;
+            
 
         }
 
-        protected void DrawImage(Graphics g)
-        {
-            var ecset = new SolidBrush(Color.Blue);
-
-            g.FillEllipse(ecset, 0, 0, Width, Height);
-        }
+        protected abstract void DrawImage(Graphics g);
+        
 
         private void Toy_Paint(object sender, PaintEventArgs e)
         {
@@ -34,7 +30,7 @@ namespace SantaFactory.Abstractions
         }
         public void MoveToy()
         {
-            Left += 1;
+            Left ++;
         }
     }
 }

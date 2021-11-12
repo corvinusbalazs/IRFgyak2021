@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace SantaFactory.Entities
 {
-    public class Car : Toy
+    public class Ball : Toy
     {
       
 

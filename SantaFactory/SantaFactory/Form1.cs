@@ -18,11 +18,12 @@ namespace SantaFactory
        
 
         private IToyFactory _toyFactory;
+        private Toy _nextToy;
 
         public IToyFactory ToyFactory
         {
             get { return _toyFactory; }
-            set { _toyFactory = value; }
+            set { _toyFactory = value; DisplayNext(); }
         }
 
 
@@ -31,14 +32,13 @@ namespace SantaFactory
             InitializeComponent();
             ToyFactory = new BallFactory();
 
-            var b = ToyFactory.CreateNew();
-            Controls.Add(b);
+            
             
         }
 
         private void createTimer_Tick(object sender, EventArgs e)
         {
-            var toy = (Car)ToyFactory.CreateNew();
+            var toy = ToyFactory.CreateNew();
             _toys.Add(toy);
             toy.Left = -toy.Width;
             mainPanel.Controls.Add(toy);
@@ -57,12 +57,40 @@ namespace SantaFactory
                     lastPosition = item.Left;
                 }
             }
-            if (lastPosition>=1000)
+            if (lastPosition > 1000)
             {
-                var oldestBall = _toys[0];
-                _toys.Remove(oldestBall);
-                mainPanel.Controls.Remove(oldestBall);
+                var oldestToy = _toys[0];
+                
+                mainPanel.Controls.Remove(oldestToy);
+                _toys.Remove(oldestToy);
             }
         }
+
+        private void SelectCar_Click(object sender, EventArgs e)
+        {
+            ToyFactory = new CarFactory();
+            
+        }
+
+        private void SelectBall_Click(object sender, EventArgs e)
+        {
+            ToyFactory = new BallFactory();
+            
+        }
+
+        private void DisplayNext()
+        {
+
+            if (_nextToy != null)
+            {
+                Controls.Remove(_nextToy);
+                _nextToy = ToyFactory.CreateNew();
+                _nextToy.Top = label1.Top + label1.Height + 20;
+                _nextToy.Left = label1.Left;
+                Controls.Add(_nextToy);
+            }
+        
+        }
+
     }
 }
