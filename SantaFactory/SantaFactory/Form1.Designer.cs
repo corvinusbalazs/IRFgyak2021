@@ -36,6 +36,8 @@ namespace SantaFactory
             this.SelectCar = new System.Windows.Forms.Button();
             this.SelectBall = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
+            this.toyPanel = new System.Windows.Forms.Panel();
+            this.btnColor = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // createTimer
@@ -86,11 +88,30 @@ namespace SantaFactory
             this.label1.TabIndex = 3;
             this.label1.Text = "Coming next:";
             // 
+            // toyPanel
+            // 
+            this.toyPanel.Location = new System.Drawing.Point(415, 12);
+            this.toyPanel.Name = "toyPanel";
+            this.toyPanel.Size = new System.Drawing.Size(194, 165);
+            this.toyPanel.TabIndex = 4;
+            // 
+            // btnColor
+            // 
+            this.btnColor.BackColor = System.Drawing.Color.Blue;
+            this.btnColor.Location = new System.Drawing.Point(159, 84);
+            this.btnColor.Name = "btnColor";
+            this.btnColor.Size = new System.Drawing.Size(132, 30);
+            this.btnColor.TabIndex = 5;
+            this.btnColor.UseVisualStyleBackColor = false;
+            this.btnColor.Click += new System.EventHandler(this.btnColor_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btnColor);
+            this.Controls.Add(this.toyPanel);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.SelectBall);
             this.Controls.Add(this.SelectCar);
@@ -110,6 +131,8 @@ namespace SantaFactory
         private System.Windows.Forms.Button SelectCar;
         private System.Windows.Forms.Button SelectBall;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Panel toyPanel;
+        private System.Windows.Forms.Button btnColor;
     }
 }
 

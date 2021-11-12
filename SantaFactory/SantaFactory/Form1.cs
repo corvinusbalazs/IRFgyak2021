@@ -18,12 +18,16 @@ namespace SantaFactory
        
 
         private IToyFactory _toyFactory;
-        private Toy _nextToy;
+        Toy _nextToy;
 
         public IToyFactory ToyFactory
         {
             get { return _toyFactory; }
-            set { _toyFactory = value; DisplayNext(); }
+            set 
+                {
+                _toyFactory = value;
+                DisplayNext();
+            }
         }
 
 
@@ -59,8 +63,7 @@ namespace SantaFactory
             }
             if (lastPosition > 1000)
             {
-                var oldestToy = _toys[0];
-                
+                var oldestToy = _toys[0];                
                 mainPanel.Controls.Remove(oldestToy);
                 _toys.Remove(oldestToy);
             }
@@ -69,13 +72,17 @@ namespace SantaFactory
         private void SelectCar_Click(object sender, EventArgs e)
         {
             ToyFactory = new CarFactory();
-            
+            toyPanel.Controls.Clear();
+            var valami = ToyFactory.CreateNew();
+            toyPanel.Controls.Add(valami);
         }
 
         private void SelectBall_Click(object sender, EventArgs e)
         {
             ToyFactory = new BallFactory();
-            
+            toyPanel.Controls.Clear();
+            var valami = ToyFactory.CreateNew();
+            toyPanel.Controls.Add(valami);
         }
 
         private void DisplayNext()
@@ -83,14 +90,26 @@ namespace SantaFactory
 
             if (_nextToy != null)
             {
-                Controls.Remove(_nextToy);
+                toyPanel.Controls.Remove(_nextToy);
+               
+                //this.Controls.Remove(_nextToy);
                 _nextToy = ToyFactory.CreateNew();
-                _nextToy.Top = label1.Top + label1.Height + 20;
-                _nextToy.Left = label1.Left;
-                Controls.Add(_nextToy);
+                toyPanel.Controls.Add(_nextToy);
+                //_nextToy.Top = this.label1.Top;
+                //_nextToy.Left = this.label1.Left + this.label1.Top;
+                //Controls.Add(_nextToy);
             }
         
         }
 
+        private void btnColor_Click(object sender, EventArgs e)
+        {
+            var button = (Button)sender;
+            var cd = new ColorDialog();
+            if (cd.ShowDialog() != DialogResult.OK)
+            {
+                return;
+            }
+        }
     }
 }
