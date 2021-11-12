@@ -23,7 +23,9 @@ namespace SantaFactory.Entities
 
         protected void DrawImage(Graphics g)
         {
-            g.FillEllipse(new SolidBrush(Color.Blue), 0, 0, Width, Height);
+            var ecset = new SolidBrush(Color.Blue);
+
+            g.FillEllipse(ecset, 0, 0, Width, Height);
         }
 
         private void Ball_Paint(object sender, PaintEventArgs e)
