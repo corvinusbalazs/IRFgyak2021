@@ -63,7 +63,7 @@ namespace UnitTestExample.Test
         [
             Test,
             TestCase("irf@uni-corvinus.hu", "Abcd1234"),
-            TestCase("irf@uni-corvinus.hu", "Abcd1234567"),
+            TestCase("irf2@uni-corvinus.hu", "Abcd1234567"),
         ]
         public void TestRegisterHappyPath(string email, string password)
         {
@@ -79,7 +79,8 @@ namespace UnitTestExample.Test
 
             Assert.AreEqual(email, actualResult.Email);
             Assert.AreEqual(password, actualResult.Password);
-            Assert.AreEqual(Guid.Empty, actualResult.ID);
+            
+            Assert.AreNotEqual(Guid.Empty, actualResult.ID);
                    
 
         }
