@@ -1,11 +1,14 @@
-﻿using NUnit.Framework;
+﻿using Moq;
+using NUnit.Framework;
 using System;
 using System.Activities;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnitTestExample.Abstractions;
 using UnitTestExample.Controllers;
+using UnitTestExample.Entities;
 
 namespace UnitTestExample.Test
 {
@@ -68,12 +71,15 @@ namespace UnitTestExample.Test
         public void TestRegisterHappyPath(string email, string password)
         {
             // Arrange
-
-            var accountController = new AccountController();
-
+            var accountMenegerMock = new Mock<IAccountManager>(MockBehavior.Strict);//extra rész
+            accountMenegerMock.Setup(m => m.CreateAccount(It.IsAny<Account>()))     //extra rész
+                               .Returns<Account>(a => a);                           //extra rész
+            var accountController = new AccountController();                        //extra rész
+            accountController.AccountManager = accountMenegerMock.Object;           //extra rész
             // Act
 
             var actualResult = accountController.Register(email, password);
+            
 
             // Assert
 
@@ -81,7 +87,9 @@ namespace UnitTestExample.Test
             Assert.AreEqual(password, actualResult.Password);
             
             Assert.AreNotEqual(Guid.Empty, actualResult.ID);
-                   
+
+            accountMenegerMock.Verify(m => m.CreateAccount(actualResult), Times.Once);//extra rész
+
 
         }
 
