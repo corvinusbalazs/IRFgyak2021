@@ -15,6 +15,9 @@ namespace Mikroszimulácio
     public partial class Form1 : Form
     {
         List<Person> Population = new List<Person>();
+        List<int> Males = new List<int>();
+        List<int> Females = new List<int>();
+
         List<BirthProbability> BirthProbabilities = new List<BirthProbability>();
         List<DeathProbability> DeathProbabilities = new List<DeathProbability>();
         Random rng = new Random(1234);
@@ -22,20 +25,28 @@ namespace Mikroszimulácio
         {
 
             InitializeComponent();
-
-            string population_csv = @"C:\Temp\nép-teszt.csv";
+            
+            //string BEpopulation_csv = @;
+            string TESZTpopulation_csv = @"C:\Temp\nép-teszt.csv";
+            string FULLpopulation_csv = @"C:\Temp\nép.csv";
             string birthProbabilities_csv = @"C:\Temp\születés.csv";
             string deathProbabilities_csv = @"C:\Temp\halál.csv";
-            Population =GetPopulation(population_csv);
+            //Population = GetPopulation(betextbox);
             BirthProbabilities = GetBirthProbability(birthProbabilities_csv);
             DeathProbabilities = DeathProbability(deathProbabilities_csv);
 
-            dataGridView1.DataSource = Population;
+            //dataGridView1.DataSource = Population;
+            richTextBox1.Clear();
+            Males.Clear();
+            Females.Clear();
 
+        }
 
-            for (int year = 2005; year <= 2024; year++)
+        public void Simulation()
+        {
+            for (int year = 2005; year <= numericUpDown1.Value; year++)
             {
-                
+
                 for (int i = 0; i < Population.Count; i++)
                 {
                     SimStep(year, Population[i]);
@@ -47,10 +58,14 @@ namespace Mikroszimulácio
                 int nbrOfFemales = (from x in Population
                                     where x.Gender == Gender.Female && x.IsAlive
                                     select x).Count();
+
+                Males.Add(nbrOfMales);
+                Females.Add(nbrOfFemales);
                 Console.WriteLine(
                     string.Format("Év:{0} Fiúk:{1} Lányok:{2}", year, nbrOfMales, nbrOfFemales));
             }
         }
+
         public List<Person> GetPopulation(string csvpath)
         {
             List<Person> population = new List<Person>();
@@ -146,5 +161,45 @@ namespace Mikroszimulácio
             }
         }
 
+       public void DisplayResults()
+        {
+            
+
+            for (int i = 2005; i <= numericUpDown1.Value; i++)
+            {
+                richTextBox1.AppendText(String.Format("Szimulációs év : {0} \n\tFiúk : {1} \n\tLányok :{2} \n \n", i, Males[i - 2005], Females[i - 2005]));
+            }
+
+
+
+
+        }
+
+        private void Startbtn_Click(object sender, EventArgs e)
+        {
+            string betextbox = @textBox1.Text;
+            Population = GetPopulation(betextbox);
+            Simulation();
+            DisplayResults();
+        }
+
+        private void Btn_browse_Click(object sender, EventArgs e)
+        {
+            //openFileDialog1.ShowDialog();
+            OpenFileDialog fileDialog = new OpenFileDialog();
+            fileDialog.ShowDialog();
+
+            textBox1.Text = fileDialog.FileName;
+        }
+
+        //private void button3_Click(object sender, EventArgs e)
+        //{
+        //    for (int i = 0; i < Males.Count; i++)
+        //    {
+        //        Console.WriteLine(
+        //               string.Format("Fiúk:{0}",Males[i] ));
+        //    }
+            
+        //}
     }
 }
