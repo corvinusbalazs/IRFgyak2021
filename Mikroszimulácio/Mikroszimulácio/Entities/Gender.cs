@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace Mikroszimulácio.Entities
 {
-    class Gender
+    public enum Gender
     {
+        Male = 1,
+        Female = 2
     }
 }
