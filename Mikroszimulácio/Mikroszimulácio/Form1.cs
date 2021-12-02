@@ -17,6 +17,7 @@ namespace Mikroszimulácio
         List<Person> Population = new List<Person>();
         List<BirthProbability> BirthProbabilities = new List<BirthProbability>();
         List<DeathProbability> DeathProbabilities = new List<DeathProbability>();
+        Random rng = new Random(1234);
         public Form1()
         {
 
@@ -30,6 +31,25 @@ namespace Mikroszimulácio
             DeathProbabilities = DeathProbability(deathProbabilities_csv);
 
             dataGridView1.DataSource = Population;
+
+
+            for (int year = 2005; year <= 2024; year++)
+            {
+                
+                for (int i = 0; i < Population.Count; i++)
+                {
+                    SimStep(year, Population[i]);
+                }
+
+                int nbrOfMales = (from x in Population
+                                  where x.Gender == Gender.Male && x.IsAlive
+                                  select x).Count();
+                int nbrOfFemales = (from x in Population
+                                    where x.Gender == Gender.Female && x.IsAlive
+                                    select x).Count();
+                Console.WriteLine(
+                    string.Format("Év:{0} Fiúk:{1} Lányok:{2}", year, nbrOfMales, nbrOfFemales));
+            }
         }
         public List<Person> GetPopulation(string csvpath)
         {
@@ -92,5 +112,39 @@ namespace Mikroszimulácio
 
             return deathProbability;
         }
+
+        public void SimStep(int year, Person person)
+        {
+            if (!person.IsAlive) { return; }
+
+            int age = year - person.BirthYear;
+
+            double pD = (from X in DeathProbabilities
+                         where X.Gender == person.Gender && X.Age == age
+                         select X.DOdds).FirstOrDefault();
+
+            if (rng.NextDouble() <= pD)
+                person.IsAlive = false;
+
+
+
+            if (person.IsAlive && person.Gender == Gender.Female)
+            {
+
+                double pB = (from x in BirthProbabilities
+                             where x.Age == age
+                             select x.BOdds).FirstOrDefault();
+
+                if (rng.NextDouble() <= pB)
+                {
+                    Person ujszulott = new Person();
+                    ujszulott.BirthYear = year;
+                    ujszulott.NbrOfChildren = 0;
+                    ujszulott.Gender = (Gender)(rng.Next(1, 3));
+                    Population.Add(ujszulott);
+                }
+            }
+        }
+
     }
 }
